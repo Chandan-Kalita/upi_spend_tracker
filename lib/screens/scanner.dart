@@ -75,7 +75,8 @@ class _QRScannerPageState extends State<QRScannerPage>
                 final List<Barcode> barcodes = capture.barcodes;
                 if (barcodes.isNotEmpty && !hasScanned) {
                   final String code = barcodes.first.rawValue ?? "Unknown";
-                  log("detected");
+                  log("detected: " + code);
+
                   try {
                     Uri uri = Uri.parse(code);
                     if (uri.scheme != "upi" ||

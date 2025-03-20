@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PaymentInput extends StatefulWidget {
   final String upiUrl;
@@ -27,6 +28,13 @@ class _PaymentInput extends State<PaymentInput> {
     nameController.text = uri.queryParameters["pn"] ?? "";
   }
 
+  void onClickNext() async {
+    final newUri = uri.replace(
+        queryParameters: {...uri.queryParameters, "am": amountController.text});
+    log(newUri.toString());
+    await launchUrl(newUri);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +42,7 @@ class _PaymentInput extends State<PaymentInput> {
         title: const Text("Payment Input"),
       ),
       floatingActionButton: ElevatedButton(
-        onPressed: () {},
+        onPressed: onClickNext,
         style: ElevatedButton.styleFrom(
             shape: CircleBorder(), padding: EdgeInsets.all(30)),
         child: const Text(
